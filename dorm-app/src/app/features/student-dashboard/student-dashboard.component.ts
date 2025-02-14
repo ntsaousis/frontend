@@ -24,6 +24,7 @@ export class StudentDashboardComponent implements OnInit {
 
   ngOnInit(): void {
     const userId = this.authService.getDecodedToken().userId;
+    console.log(userId);
     this.studentService.getStudentDetails(userId).subscribe({
       next: (data) => (this.student = data),
       error: (err) => console.error('Error fetching student details:', err),

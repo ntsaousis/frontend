@@ -53,7 +53,7 @@ export class RegisterComponent {
         error: (err) => console.error('Registration failed:', err),
       });
     }
-    this.router.navigate([])
+    this.router.navigate(['/login'])
     
   }
   

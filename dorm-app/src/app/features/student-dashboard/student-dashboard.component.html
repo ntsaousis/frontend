@@ -5,16 +5,16 @@
        
       </div>
       <div class="card-body">
-        <h4 class="mb-4">Welcome, {{ student.user.firstName }} {{ student?.user?.lastName }}</h4>
+        <h4 class="mb-4">Welcome, {{ student.user.firstName }} {{ student.user.lastName }}</h4>
         <ul class="list-group">
           <li class="list-group-item">
             <strong>Username:</strong> {{ student.user.username }}
           </li>
           <li class="list-group-item">
-            <strong>Role:</strong> {{ student.user?.role }}
+            <strong>Role:</strong> {{ student.user.role }}
           </li>
           <li class="list-group-item">
-            <strong>Room:</strong> {{ student.room?.roomName || 'Not Assigned' }}
+            <strong>Room:</strong> {{ student.room.roomName || 'Not Assigned' }}
           </li>
           <li class="list-group-item">
             <strong>Room Capacity:</strong> {{ student?.room?.roomCapacity || 'N/A' }}

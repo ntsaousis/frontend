@@ -1,0 +1,18 @@
+.card {
+    min-width: 500px; 
+    width: 100%;
+    margin: auto;
+    padding: 20px;
+}
+
+/* .card {
+    width: 100%;
+} */
+
+.small-text {
+    font-size: 0.875rem; 
+    color: red;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+}
