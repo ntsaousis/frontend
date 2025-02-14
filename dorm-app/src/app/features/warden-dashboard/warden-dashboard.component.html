@@ -1,0 +1,56 @@
+<div class="container mt-4">
+    <h2 class="text-center">Warden Dashboard</h2>
+
+
+    
+  
+    <!-- Dropdown επιλογής φοιτητή -->
+    <div class="row mt-3">
+      <div class="col-md-6">
+        <label for="studentSelect" class="form-label">Select Student:</label>
+        <select class="form-select" id="studentSelect" [(ngModel)]="selectedStudentId">
+          <option *ngFor="let student of students" [value]="student.id"  >
+            {{ student.user.firstName }} {{ student.user.lastName }} 
+          </option>
+        </select>
+      </div>
+  
+      <!-- Dropdown επιλογής δωματίου -->
+      <div class="col-md-6">
+        <label for="roomSelect" class="form-label">Select Room:</label>
+        <select class="form-select" id="roomSelect" [(ngModel)]="selectedRoomId">
+          <option *ngFor="let room of rooms" [value]="room.roomId" [disabled]="!room.available">
+           {{room.roomId}} Room {{ room.roomName }} (Capacity: {{ room.roomCapacity }})
+          </option>
+        </select>
+      </div>
+    </div>
+  
+    <!-- Κουμπί Ανάθεσης -->
+    <div class="text-center mt-3">
+      <button class="btn btn-primary" (click)="assignStudentToRoom()" [disabled]="!selectedStudentId || !selectedRoomId">
+        Assign Student to Room
+      </button>
+    </div>
+  
+    <!-- Πίνακας με όλους τους φοιτητές και τα δωμάτια τους -->
+    <h3 class="mt-4">Student Room Assignments</h3>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Username</th>
+          <th>Assigned Room</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let student of students">
+          <td>{{ student.user.firstName }} {{ student.user.lastName }}</td>
+          <td>{{ student.user.username }}</td>
+          <td>{{ student.room?.roomName || 'Not Assigned' }}</td>
+          <td><button class="btn btn-primary btn-sm" (click)="unassignStudent(student.id)" >Unassign</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

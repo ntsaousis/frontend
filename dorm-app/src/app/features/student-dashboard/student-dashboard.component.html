@@ -1,0 +1,35 @@
+<div class="container my-5">
+    <div class="card shadow-sm">
+      <div class="card-header bg-primary text-white">
+        <h2 class="text-center">Student Dashboard</h2>
+       
+      </div>
+      <div class="card-body">
+        <h4 class="mb-4">Welcome, {{ student.user.firstName }} {{ student?.user?.lastName }}</h4>
+        <ul class="list-group">
+          <li class="list-group-item">
+            <strong>Username:</strong> {{ student.user.username }}
+          </li>
+          <li class="list-group-item">
+            <strong>Role:</strong> {{ student.user?.role }}
+          </li>
+          <li class="list-group-item">
+            <strong>Room:</strong> {{ student.room?.roomName || 'Not Assigned' }}
+          </li>
+          <li class="list-group-item">
+            <strong>Room Capacity:</strong> {{ student?.room?.roomCapacity || 'N/A' }}
+          </li>
+          <li class="list-group-item">
+            <strong>Availability:</strong> 
+            {{ student?.room?.available !== null ? student?.room?.available : 'N/A' }}
+          </li>
+        </ul>
+      </div>
+      <div class="card-footer text-center">
+        <button class="btn btn-primary me-2" routerLink ="/edit-student"  >Edit Profile</button>
+        <button class="btn btn-secondary me-2" (click)="onLogout()">Logout</button>
+        <button class="btn btn-secondary" routerLink = "/complaints-dashboard" >Complaints</button>
+      </div>
+    </div>
+  </div>
+  

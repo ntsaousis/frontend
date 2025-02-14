@@ -1,0 +1,23 @@
+<div class="container mt-5">
+    <h2>Login</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="handleLogin()">
+      <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input id="username" type="text" class="form-control" formControlName="username">
+        <div *ngIf="loginForm.controls.username.invalid && loginForm.controls.username.touched" class="text-danger">
+          Username is required
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input id="password" type="password" class="form-control" formControlName="password">
+        <div *ngIf="loginForm.controls.password.invalid && loginForm.controls.password.touched" class="text-danger">
+          Password is required
+        </div>
+      </div>
+  
+      <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">Login</button>
+    </form>
+  </div>
+  
