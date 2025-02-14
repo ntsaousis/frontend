@@ -4,11 +4,12 @@ import { AuthService } from '../../core/services/auth.service';
 import { Student } from '../../shared/interfaces/app';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-student-dashboard',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './student-dashboard.component.html',
   styleUrls: ['./student-dashboard.component.css'],
 })
