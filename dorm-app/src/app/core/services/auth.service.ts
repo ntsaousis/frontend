@@ -31,7 +31,17 @@ export class AuthService {
    * @returns True if a token exists, false otherwise.
    */
   isLoggedIn(): boolean {
-    return !!localStorage.getItem('token');
+    const token = this.getToken();
+    if (!token) return false;
+  
+    try {
+      const decodedToken: any = jwtDecode(token);
+      const expiration = decodedToken.exp * 1000; 
+      return Date.now() < expiration;
+    } catch (error) {
+      console.error('Invalid token:', error);
+      return false;
+    }
   }
 
   /**
@@ -52,6 +62,7 @@ export class AuthService {
     return null; // Return null if no token exists
   }
 
+
   /**
    * Retrieves the user's ID from the JWT token.
    * @returns The user's ID or null if not available.
@@ -68,6 +79,20 @@ export class AuthService {
       }
     }
     return null; // Return null if no token exists
+  }
+
+  getUsername(): string | null {
+    const token = this.getToken();
+    if (token) {
+      try {
+        const decodedToken: any = jwtDecode(token);
+        return decodedToken.sub || null; 
+      } catch (error) {
+        console.error('Error decoding token:', error);
+        return null;
+      }
+    }
+    return null;
   }
 
    /**
@@ -111,5 +136,6 @@ export class AuthService {
    */
   logout(): void {
     localStorage.removeItem('token');
+    localStorage.removeItem('username');
   }
 }

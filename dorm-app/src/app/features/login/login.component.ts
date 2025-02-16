@@ -16,6 +16,7 @@ export class LoginComponent {
     username: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required]),
   });
+  
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -27,8 +28,8 @@ export class LoginComponent {
 
     this.authService.login(loginData).subscribe({
       next: () => {
-        const dashboardRoute = this.authService.getDashboardRoute(); // Λήψη του dashboard route
-        this.router.navigate([dashboardRoute]); // Ανακατεύθυνση
+        const dashboardRoute = this.authService.getDashboardRoute(); 
+        this.router.navigate([dashboardRoute]); 
       },
       error: (err) => {
         console.error('Login failed:', err);

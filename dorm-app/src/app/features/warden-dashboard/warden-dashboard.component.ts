@@ -57,7 +57,8 @@ export class WardenDashboardComponent implements OnInit {
       this.wardenService.assignStudentToRoom(this.selectedStudentId, this.selectedRoomId).subscribe({
         next: () => {
           alert('Student assigned successfully!');
-          this.fetchStudents(); // Refresh the list
+          this.fetchStudents();
+          this.fetchRooms();
         },
         error: (err) => console.error('Assignment failed:', err),
       });
@@ -71,6 +72,19 @@ export class WardenDashboardComponent implements OnInit {
       this.wardenService.unassignStudent(studentId).subscribe(() => {
         console.log(studentId)
         alert('Student unassigned successfully');
+        this.fetchStudents(); 
+        this.fetchRooms();
+      });
+    }
+  }
+
+  deleteStudent(studentId: number): void {
+    console.log(`Trying to delete student with ID: ${studentId}`);
+    
+    if (confirm('Are you sure you want to delete this student permantly?')) {
+      this.wardenService.deleteStudent(studentId).subscribe(() => {
+        console.log(studentId)
+        alert('Student deleted successfully');
         this.fetchStudents(); // Refresh the list
       });
     }

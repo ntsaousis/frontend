@@ -27,13 +27,17 @@ export class WardenService {
 
   assignStudentToRoom(studentId: number, roomId: number): Observable<any> {
     
-    return this.http.post(`${API_URL}/rooms/assign`, { studentId, roomId });
+    return this.http.post(`${API_URL}/wardens/assign`, { studentId, roomId });
   }
 
   unassignStudent(studentId: number): Observable<Student> {
     
   
-    return this.http.put<Student>(`${API_URL}/rooms/unassign/${studentId}`, {} );
+    return this.http.put<Student>(`${API_URL}/wardens/unassign/${studentId}`, {} );
+  }
+
+  deleteStudent(studentId: number): Observable<Student> {
+    return  this.http.delete<Student>(`${API_URL}/wardens/students/${studentId}`, {})
   }
   
 }

@@ -1,30 +1,32 @@
-import {
-  Component, inject
-  
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../core/services/auth.service';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [],
+  imports: [ CommonModule],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  styleUrls: ['./header.component.css']
 })
-export class HeaderComponent {
-   router = inject(Router)
+export class HeaderComponent implements OnInit {
+  isLoggedIn = false;
+  username: string | null = '';
 
-    constructor(
-     
-      private authService: AuthService
-    ) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
-
-  onLogout(): void {
-    this.authService.logout();
-    this.router.navigate([''])
-    
+  ngOnInit(): void {
+    this.isLoggedIn = this.authService.isLoggedIn();
+    console.log('User Logged In:', this.isLoggedIn);
+    if (this.isLoggedIn) {
+      this.username = this.authService.getUsername();
+      console.log('Username:', this.username);// Παίρνει το username από το token
+    }
   }
 
+  onLogout(): void {
+    this.authService.logout(); // Καθαρίζει το token
+    this.router.navigate(['/login']); // Ανακατεύθυνση στη σελίδα login
+  }
 }

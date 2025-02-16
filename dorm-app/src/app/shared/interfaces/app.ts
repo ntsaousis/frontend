@@ -30,6 +30,7 @@ export interface User {
   lastName: string;
   username: string;
   role: string;
+  email: string
 }
 
 export interface Student {
