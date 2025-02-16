@@ -1,0 +1,19 @@
+.construction-icon {
+    font-size: 4rem;
+    animation: bounce 1.5s infinite alternate;
+  }
+  
+  @keyframes bounce {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-10px); }
+  }
+  
+  h1 {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  p {
+    font-size: 1.1rem;
+  }
+  

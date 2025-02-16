@@ -25,6 +25,6 @@ export const routes: Routes = [
     path: 'warden-dashboard', component: WardenDashboardComponent, canActivate: [AuthGuard, RoleGuard], data: { role: 'WARDEN' }
   },
   { path: 'complaints-dashboard', component: ComplaintsDashboardComponent, canActivate: [AuthGuard] },
-  {path: 'edit-student', component: EditStudentProfileComponent, canActivate: [AuthGuard]}
+  {path: 'edit-student/:id', component: EditStudentProfileComponent, canActivate: [AuthGuard]}
 
 ];

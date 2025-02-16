@@ -27,6 +27,6 @@ export class HeaderComponent implements OnInit {
 
   onLogout(): void {
     this.authService.logout(); // Καθαρίζει το token
-    this.router.navigate(['/login']); // Ανακατεύθυνση στη σελίδα login
+    this.router.navigate(['']); // Ανακατεύθυνση στη σελίδα login
   }
 }

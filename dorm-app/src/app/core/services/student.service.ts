@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Student } from '../../shared/interfaces/app';
+import { Student, StudentUpdate} from '../../shared/interfaces/app';
 
 const API_URL = 'http://localhost:8080/api/students';
 
@@ -26,4 +26,13 @@ export class StudentService {
      
     return this.http.get<Student>(`${API_URL}/${userId}`);
   }
+
+  // getStudentsinRoom(roomId: number): Observable<any> {
+  //   return null;
+  // }
+
+  updateStudent(userId: number,updateData: StudentUpdate): Observable<any> {
+    return this.http.put(`${API_URL}/${userId}`, updateData);
+  }
+  
 }

@@ -12,10 +12,11 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  loginForm = new FormGroup({
-    username: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required]),
-  });
+  
+loginForm = new FormGroup({
+  username: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]), // Example username validation
+  password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)]), // Example password validation with regex
+});
   
 
   constructor(private authService: AuthService, private router: Router) {}
