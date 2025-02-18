@@ -31,11 +31,11 @@ export class RegisterComponent {
   handleSubmit(): void {
     const registerData = {
       user: {
-        username: this.registerForm.get('username')?.value ?? '',
+        username: this.registerForm.get('username')?.value ?? ''.trim().toLowerCase(),
         password: this.registerForm.get('password')?.value ?? '',
         firstName: this.registerForm.get('firstName')?.value ?? '',
         lastName: this.registerForm.get('lastName')?.value ?? '',
-        email: this.registerForm.get('email')?.value ?? '',
+        email: this.registerForm.get('email')?.value ?? ''.trim().toLowerCase(),
         genderType: this.registerForm.get('gender')?.value ?? '',
         role: this.registerForm.get('role')?.value ?? '',
         vat: this.registerForm.get('vat')?.value ?? '',

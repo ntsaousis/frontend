@@ -1,18 +1,14 @@
-.card {
-    min-width: 500px; 
+.error-message {
+    position: absolute;
+    bottom: -18px;
+    left: 0;
+    font-size: 12px;
+    color: #dc3545; 
     width: 100%;
-    margin: auto;
-    padding: 20px;
-}
-
-/* .card {
-    width: 100%;
-} */
-
-.small-text {
-    font-size: 0.875rem; 
-    color: red;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    max-width: 100%;
-}
+  }
+  
+  .mb-3 {
+    position: relative;
+    margin-bottom: 35px; 
+  }
+  

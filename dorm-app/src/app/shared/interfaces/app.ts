@@ -45,4 +45,9 @@ export interface StudentUpdate {
     email: string
   }
 }
+
+export interface ErrorMessage {
+  code: string;
+  description: string
+}
   

@@ -7,25 +7,23 @@
       <div class="mb-3">
         <label class="form-label">Username</label>
         <input class="form-control" formControlName="username">
-        <small *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched">
+        <div class="error-message" *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched">
           <span *ngIf="loginForm.get('username')?.errors?.['required']">Username is required.</span>
           <span *ngIf="loginForm.get('username')?.errors?.['minlength']">Username must be at least 3 characters.</span>
           <span *ngIf="loginForm.get('username')?.errors?.['maxlength']">Username cannot exceed 50 characters.</span>
-        </small>
-         
+        </div>
       </div>
 
       <!-- Password Field -->
       <div class="mb-3">
         <label class="form-label">Password</label>
         <input type="password" class="form-control" formControlName="password">
-        <small *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="text-danger">
+        <div class="error-message" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
           <span *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</span>
           <span *ngIf="loginForm.get('password')?.errors?.['minlength']">Password must be at least 8 characters.</span>
-          <span *ngIf="loginForm.get('password')?.errors?.['pattern']">Password must incluse 1 digit 1 uppercase and 1 special</span>  </small>
+          <span *ngIf="loginForm.get('password')?.errors?.['pattern']">Password must include 1 digit, 1 uppercase, and 1 special character.</span>
+        </div>
       </div>
-
-      
 
       <!-- Login Button -->
       <button class="btn btn-primary w-100" [disabled]="loginForm.invalid">Login</button>

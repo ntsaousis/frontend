@@ -4,12 +4,12 @@ import { Student, Room } from '../../shared/interfaces/app';
 import { StudentService } from '../../core/services/student.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+
 
 @Component({
   selector: 'app-warden-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule],
   templateUrl: './warden-dashboard.component.html',
   styleUrls: ['./warden-dashboard.component.css'],
 })
@@ -61,6 +61,7 @@ export class WardenDashboardComponent implements OnInit {
           this.fetchRooms();
         },
         error: (err) => console.error('Assignment failed:', err),
+        
       });
     }
   }
@@ -70,7 +71,7 @@ export class WardenDashboardComponent implements OnInit {
     
     if (confirm('Are you sure you want to unassign this student from the room?')) {
       this.wardenService.unassignStudent(studentId).subscribe(() => {
-        console.log(studentId)
+        
         alert('Student unassigned successfully');
         this.fetchStudents(); 
         this.fetchRooms();
