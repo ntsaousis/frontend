@@ -16,13 +16,13 @@ import { ErrorService } from '../../core/services/error.service';
 })
 export class StudentDashboardComponent implements OnInit {
   student!: Student;
-  errorMessage: string | null = null; // Stores error messages
+  errorMessage: string | null = null; 
   router = inject(Router);
 
   constructor(
     private studentService: StudentService,
     private authService: AuthService,
-    private errorService: ErrorService // ✅ Inject the global error service
+    private errorService: ErrorService
   ) {}
 
   ngOnInit(): void {
@@ -32,11 +32,11 @@ export class StudentDashboardComponent implements OnInit {
     this.studentService.getStudentDetails(userId).subscribe({
       next: (data) => {
         this.student = data;
-        this.errorMessage = null; // ✅ Clear error on success
+        this.errorMessage = null; 
       },
       error: (err) => {
         this.errorMessage = this.errorService.handleError(err, 'Error fetching student details');
-        alert(this.errorMessage); // ✅ Display error message
+        alert(this.errorMessage); 
       },
     });
   }
