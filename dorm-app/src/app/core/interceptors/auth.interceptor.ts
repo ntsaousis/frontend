@@ -6,8 +6,7 @@ import { throwError } from 'rxjs';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
-  const token = authService.getToken(); // Μέθοδος για ανάκτηση του JWT Token
-    console.log('Inserting Auth ')
+  const token = authService.getToken(); 
   let authReq = req;
   if (token) {
     authReq = req.clone({

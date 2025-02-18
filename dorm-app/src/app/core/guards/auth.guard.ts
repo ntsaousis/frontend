@@ -10,9 +10,9 @@ export class AuthGuard implements CanActivate {
 
   canActivate(): boolean {
     if (this.authService.isLoggedIn()) {
-      return true; // Ο χρήστης είναι συνδεδεμένος
+      return true;
     } else {
-      this.router.navigate(['/login']); // Ανακατεύθυνση στο Login
+      this.router.navigate(['/login']); 
       return false;
     }
   }

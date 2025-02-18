@@ -4,11 +4,13 @@ import { StudentService } from '../../core/services/student.service';
 import { AuthService } from '../../core/services/auth.service';
 import { StudentUpdate } from '../../shared/interfaces/app';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { ErrorService } from '../../core/services/error.service';
 
 @Component({
   selector: 'app-edit-student-profile',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterLink],
   templateUrl: './edit-student-profile.component.html',
   styleUrls: ['./edit-student-profile.component.css'] 
 })
@@ -21,9 +23,12 @@ export class EditStudentProfileComponent implements OnInit {
     email: new FormControl('', [Validators.required, Validators.email]),
   });
 
+  errorMessage: string | null = null; 
+
   constructor(
     private studentService: StudentService,
-    private authService: AuthService 
+    private authService: AuthService,
+    private errorService: ErrorService 
   ) {}
 
   ngOnInit(): void {
@@ -31,34 +36,52 @@ export class EditStudentProfileComponent implements OnInit {
     console.log('User ID from token:', userId);
 
     if (!userId) {
-      console.error('User ID is undefined!');
+      this.errorMessage = 'User ID is undefined!';
+      console.error(this.errorMessage);
       return;
     }
 
-    this.studentService.getStudentDetails(userId).subscribe((profile) => {
-      this.editProfileForm.patchValue({
-        firstName: profile.user.firstName,
-        lastName: profile.user.lastName,
-        username: profile.user.username,
-        role: profile.user.role,
-        email: profile.user.email
-      });
+    this.studentService.getStudentDetails(userId).subscribe({
+      next: (profile) => {
+        this.editProfileForm.patchValue({
+          firstName: profile.user.firstName,
+          lastName: profile.user.lastName,
+          username: profile.user.username,
+          role: profile.user.role,
+          email: profile.user.email
+        });
+        this.errorMessage = null; 
+      },
+      error: (err) => {
+        this.errorMessage = this.errorService.handleError(err, 'Failed to fetch student details');
+        alert(this.errorMessage);
+      }
     });
   }
 
+  /**
+   * Handles profile update submission
+   */
   handleSubmit(): void {
     if (this.editProfileForm.valid) {
       const userId = this.authService.getUserId();
       if (!userId) {
-        console.error('User ID is undefined!');
+        this.errorMessage = 'User ID is undefined!';
+        console.error(this.errorMessage);
         return;
       }
   
       const updateData: StudentUpdate = { user: { email: this.editProfileForm.get('email')?.value || '' } };
 
       this.studentService.updateStudent(userId, updateData).subscribe({
-        next: () => alert('Email updated successfully!'),
-        error: (err) => alert('Failed to update email.'),
+        next: () => {
+          alert('Email updated successfully!');
+          this.errorMessage = null;
+        },
+        error: (err) => {
+          this.errorMessage = this.errorService.handleError(err, 'Failed to update email');
+          alert(this.errorMessage);
+        }
       });
     }
   }

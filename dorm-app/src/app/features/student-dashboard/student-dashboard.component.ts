@@ -5,6 +5,7 @@ import { Student } from '../../shared/interfaces/app';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { RouterLink } from '@angular/router';
+import { ErrorService } from '../../core/services/error.service';
 
 @Component({
   selector: 'app-student-dashboard',
@@ -15,27 +16,41 @@ import { RouterLink } from '@angular/router';
 })
 export class StudentDashboardComponent implements OnInit {
   student!: Student;
-  router = inject(Router)
+  errorMessage: string | null = null; // Stores error messages
+  router = inject(Router);
 
   constructor(
     private studentService: StudentService,
-    private authService: AuthService
+    private authService: AuthService,
+    private errorService: ErrorService // ✅ Inject the global error service
   ) {}
 
   ngOnInit(): void {
     const userId = this.authService.getDecodedToken().userId;
     console.log(userId);
+    
     this.studentService.getStudentDetails(userId).subscribe({
-      next: (data) => (this.student = data),
-      error: (err) => console.error('Error fetching student details:', err),
+      next: (data) => {
+        this.student = data;
+        this.errorMessage = null; // ✅ Clear error on success
+      },
+      error: (err) => {
+        this.errorMessage = this.errorService.handleError(err, 'Error fetching student details');
+        alert(this.errorMessage); // ✅ Display error message
+      },
     });
   }
 
-  
-
+  /**
+   * Handles user logout and navigation
+   */
   onLogout(): void {
-    this.authService.logout();
-    this.router.navigate([''])
-    
+    try {
+      this.authService.logout();
+      this.router.navigate(['']);
+    } catch (err) {
+      this.errorMessage = this.errorService.handleError(err, 'Logout failed');
+      alert(this.errorMessage);
+    }
   }
 }
