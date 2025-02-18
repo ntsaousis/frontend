@@ -4,7 +4,7 @@ import { Student, Room } from '../../shared/interfaces/app';
 import { StudentService } from '../../core/services/student.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ErrorMessage } from '../../shared/interfaces/app';
+import { ErrorService } from '../../core/services/error.service';
 
 @Component({
   selector: 'app-warden-dashboard',
@@ -22,7 +22,8 @@ export class WardenDashboardComponent implements OnInit {
 
   constructor(
     private wardenService: WardenService,
-    private studentService: StudentService
+    private studentService: StudentService,
+    private errorService: ErrorService // ✅ Injecting the global error service
   ) {}
 
   ngOnInit(): void {
@@ -37,10 +38,11 @@ export class WardenDashboardComponent implements OnInit {
     this.studentService.getAllStudents().subscribe({
       next: (data) => {
         this.students = data;
-        this.errorMessage = null; // Clear error message on success
+        this.errorMessage = null; // ✅ Clear error message on success
       },
       error: (err) => {
-        this.handleError(err, 'Error fetching students');
+        this.errorMessage = this.errorService.handleError(err, 'Error fetching students');
+        alert(this.errorMessage);
       },
     });
   }
@@ -55,7 +57,8 @@ export class WardenDashboardComponent implements OnInit {
         this.errorMessage = null;
       },
       error: (err) => {
-        this.handleError(err, 'Error fetching rooms');
+        this.errorMessage = this.errorService.handleError(err, 'Error fetching rooms');
+        alert(this.errorMessage);
       },
     });
   }
@@ -74,7 +77,8 @@ export class WardenDashboardComponent implements OnInit {
           this.errorMessage = null;
         },
         error: (err) => {
-          this.handleError(err, 'Assignment failed');
+          this.errorMessage = this.errorService.handleError(err, 'Assignment failed');
+          alert(this.errorMessage);
         },
       });
     } else {
@@ -97,7 +101,8 @@ export class WardenDashboardComponent implements OnInit {
           this.errorMessage = null;
         },
         error: (err) => {
-          this.handleError(err, 'Unassignment failed');
+          this.errorMessage = this.errorService.handleError(err, 'Unassignment failed');
+          alert(this.errorMessage);
         },
       });
     }
@@ -117,29 +122,10 @@ export class WardenDashboardComponent implements OnInit {
           this.errorMessage = null;
         },
         error: (err) => {
-          this.handleError(err, 'Student deletion failed');
+          this.errorMessage = this.errorService.handleError(err, 'Student deletion failed');
+          alert(this.errorMessage);
         },
       });
     }
-  }
-
-  /**
-   * Handles API errors by extracting backend messages
-   */
-  private handleError(error: any, defaultMsg: string): void {
-    console.error(`${defaultMsg}:`, error);
-    
-    if (error.error) {
-      try {
-        const response: ErrorMessage = error.error; // Extract backend error response
-        this.errorMessage = response.description || defaultMsg;
-      } catch (e) {
-        this.errorMessage = defaultMsg;
-      }
-    } else {
-      this.errorMessage = defaultMsg;
-    }
-
-    alert(this.errorMessage); // Show error message in an alert
   }
 }

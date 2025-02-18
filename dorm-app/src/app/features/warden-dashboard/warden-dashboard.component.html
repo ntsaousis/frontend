@@ -1,6 +1,11 @@
 <div class="container mt-4">
   <h2 class="text-center">Warden Dashboard</h2>
 
+  <div *ngIf="errorMessage" class="error-message">
+    ⚠️ {{ errorMessage }}
+  </div>
+  
+
   
   <div class="row mt-4">
       
